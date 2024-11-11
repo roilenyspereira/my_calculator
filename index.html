@@ -1,36 +1,125 @@
 <!DOCTYPE html>
 <html>
-	<head>
-		<title>Calculator</title>
-		<meta charset="utf-8">
-	</head>
-	<body>
-		<h1>Calculadora de Roilenys Pereira</h1>
-		Number:
-		<input type="text" id="n1">
-		<p>
-			<button onclick="cube()"> x^3 </button>
+  <head>
+    <title>Calculadora de Roilenys Pereira</title>
+    <meta charset="utf-8">
+    <style>
+      /* Agregar algunos estilos para la calculadora */
+      .calculator {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 10px;
+        max-width: 200px;
+        margin: 0 auto;
+      }
+      .calculator input {
+        grid-column: span 4;
+        text-align: right;
+        padding: 10px;
+        font-size: 20px;
+      }
+      .calculator button {
+        padding: 20px;
+        font-size: 20px;
+        cursor: pointer;
+      }
+      .calculator button:hover {
+        background-color: #f0f0f0;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Calculadora de Roilenys Pereira</h1>
+    <div class="calculator">
+      <input type="text" id="n1" disabled>
 
-			<button onclick="sine()"> sin </button>
-=======
-			<button onclick="power_4()"> x^4</button>
+      <!-- Botones de la calculadora -->
+      <button onclick="appendNumber(7)">7</button>
+      <button onclick="appendNumber(8)">8</button>
+      <button onclick="appendNumber(9)">9</button>
+      <button onclick="operation('+')">+</button>
 
-		</p>
-		<script type="text/javascript">
-			function cube() {
-				var num = document.getElementById("n1");
-				num.value = Math.pow(num.value, 3);
-			}
+      <button onclick="appendNumber(4)">4</button>
+      <button onclick="appendNumber(5)">5</button>
+      <button onclick="appendNumber(6)">6</button>
+      <button onclick="operation('-')">-</button>
 
-			function sine() {
-				var num = document.getElementById("n1");
-				num.value = Math.sin(num.value);
-			}
-			function power_4() {
-				var num = document.getElementById("n1");
-				num.value = Math.pow(num.value, 4);
+      <button onclick="appendNumber(1)">1</button>
+      <button onclick="appendNumber(2)">2</button>
+      <button onclick="appendNumber(3)">3</button>
+      <button onclick="operation('*')">*</button>
 
-			}
-		</script>
-	</body>
+      <button onclick="appendNumber(0)">0</button>
+      <button onclick="clearInput()">C</button>
+      <button onclick="calculateResult()">=</button>
+      <button onclick="operation('/')">/</button>
+
+      <!-- Botones para operaciones adicionales -->
+      <button onclick="cube()">x³</button>
+      <button onclick="power_4()">x⁴</button>
+      <button onclick="sine()">sin</button>
+    </div>
+
+    <script type="text/javascript">
+      let currentOperation = '';
+      let previousValue = '';
+
+      // Función para agregar números al campo de entrada
+      function appendNumber(number) {
+        let num = document.getElementById("n1");
+        num.value = num.value === '0' ? number : num.value + number;
+      }
+
+      // Función para limpiar el campo de entrada
+      function clearInput() {
+        document.getElementById("n1").value = '';
+      }
+
+      // Función para guardar la operación seleccionada
+      function operation(operator) {
+        previousValue = document.getElementById("n1").value;
+        currentOperation = operator;
+        document.getElementById("n1").value = '';
+      }
+
+      // Función para calcular el resultado
+      function calculateResult() {
+        let num = document.getElementById("n1").value;
+        switch (currentOperation) {
+          case '+':
+            document.getElementById("n1").value = parseFloat(previousValue) + parseFloat(num);
+            break;
+          case '-':
+            document.getElementById("n1").value = parseFloat(previousValue) - parseFloat(num);
+            break;
+          case '*':
+            document.getElementById("n1").value = parseFloat(previousValue) * parseFloat(num);
+            break;
+          case '/':
+            document.getElementById("n1").value = parseFloat(previousValue) / parseFloat(num);
+            break;
+          default:
+            break;
+        }
+        currentOperation = '';
+        previousValue = '';
+      }
+
+      // Funciones matemáticas adicionales
+      function cube() {
+        var num = document.getElementById("n1");
+        num.value = Math.pow(num.value, 3);
+      }
+
+      function sine() {
+        var num = document.getElementById("n1");
+        num.value = Math.sin(num.value);
+      }
+
+      function power_4() {
+        var num = document.getElementById("n1");
+        num.value = Math.pow(num.value, 4);
+      }
+    </script>
+  </body>
 </html>
